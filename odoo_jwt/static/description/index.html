@@ -1,0 +1,99 @@
+
+<section>
+    <h1>JWT Authentication for Odoo Controllers</h1>
+    <p>This module adds JWT authentication to Odoo APIs, providing a stateless authentication mechanism suitable for mobile and server-based applications. After installation just go to <code>https://localhost:8069/api/login</code> and you can use and understand all the functionality</p>
+
+    <h2>Features</h2>
+    <ul>
+        <li><strong>Authentication Routes:</strong> <code>/api/authenticate</code> for login, <code>/api/update/access-token</code> and <code>/api/update/refresh-token</code> for token management, and <code>/api/revoke/token</code> for logout.</li>
+        <li><strong>Protected Resources:</strong> Access endpoints like <code>/api/protected/json</code> with valid JWT tokens.</li>
+    </ul>
+
+    <h2>Why JWT?</h2>
+    <p>JWTs offer a stateless authentication method that doesn't rely on server-stored sessions, making them ideal for mobile and server-based applications. They reduce server overhead and improve scalability by embedding authentication data within the token itself.</p>
+
+    <h2>Installation</h2>
+    <ol>
+        <li>Install PyJWT: <code>pip install PyJWT</code></li>
+        <li>This module is compatible with Odoo 11 and later versions, including Odoo 17.</li>
+    </ol>
+    <p>For detailed installation guides:</p>
+    <ul>
+        <li><a class="link" href="https://www.youtube.com/watch?v=coQzKW6l_y8" target="_blank">Video Tutorial</a></li>
+        <li><a class="link" href="https://www.cybrosys.com/blog/how-to-install-custom-modules-in-odoo" target="_blank">Text Guide</a></li>
+    </ul>
+
+    <h2>Module Documentation</h2>
+
+    <h3>irHttp (models.AbstractModel) (models/ir_http.py)</h3>
+    <p>Overrides <code>_authenticate</code> to handle JWT authentication by checking the Authorization header and validating the token.</p>
+
+    <h3>JwtToken (setup/jwt_token.py)</h3>
+    <ul>
+        <li><code>get_jwt_secret(cls)</code>: Retrieves the secret key for token signing.</li>
+        <li><code>generate_token(cls, user_id, duration=0)</code>: Generates a JWT token for a user.</li>
+        <li><code>create_refresh_token(cls, uid)</code>: Creates and stores a refresh token; sets it as a secure cookie for web clients.</li>
+        <li><code>verify_refresh_token(cls, req, uid, r_token)</code>: Validates the refresh token.</li>
+    </ul>
+
+    <h3>ApiAuth (http.Controller) (controllers/api_auth.py)</h3>
+    <p><strong>Endpoints:</strong></p>
+    <ul>
+        <li><code>/api/authenticate</code>: Authenticates a user and issues tokens.
+            <ul>
+                <li><strong>Input:</strong> <code>{ "db": "o17e", "login": "admin", "password": "xxx" }</code></li>
+                <li><strong>Output:</strong> <code>{ 'rotation_period': n, 'token': xxx, 'user_id': xx, ... }</code></li>
+            </ul>
+        </li>
+        <li><code>/api/update/access-token</code>: Refreshes an access token.
+            <ul>
+                <li><strong>Input:</strong> <code>{ 'user_id': xx }</code></li>
+                <li><strong>Headers (mobile):</strong> <code>{'refreshToken': xx, ...default_headers}</code></li>
+                <li><strong>Output:</strong> <code>{ 'access_token': xxx }</code></li>
+            </ul>
+        </li>
+        <li><code>/api/update/refresh-token</code>: Rotates the refresh token.
+            <ul>
+                <li><strong>Input:</strong> <code>{ 'user_id': xx }</code></li>
+                <li><strong>Headers (mobile):</strong> <code>{'refreshToken': xxxx, ...default_headers}</code></li>
+                <li><strong>Output:</strong> <code>{ 'status': 'done' }</code></li>
+            </ul>
+        </li>
+        <li><code>/api/revoke/token</code>: Revokes a refresh token.
+            <ul>
+                <li><strong>Input:</strong> <code>{}</code></li>
+                <li><strong>Headers (mobile):</strong> <code>{'refreshToken': xxxx, ...default_headers}</code></li>
+                <li><strong>Output:</strong> <code>{ 'status': 'done' }</code></li>
+            </ul>
+        </li>
+        <li><code>/api/protected/json</code>: Access protected resources with a valid JWT.
+            <ul>
+                <li><strong>Input:</strong> <code>{}</code></li>
+                <li><strong>Headers (mobile):</strong> <code>{'refreshToken': xxxx, ...default_headers}</code></li>
+                <li><strong>Output:</strong> <code>{ 'status': user_list }</code></li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>Utility Methods</h3>
+    <ul>
+        <li><code>get_refresh_token(cls, req_obj)</code>: Retrieves the refresh token from cookies or headers.</li>
+        <li><code>get_json_params(cls)</code>: Extracts JSON parameters from the request body.</li>
+    </ul>
+
+    <h2>Testing</h2>
+    <p>Use the <code>/api/login</code> page to test API routes by entering host details, API URL, headers, and input data.</p>
+
+    <h2>Notes</h2>
+    <pre class="note">
+default_headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'access_token': xxx (null in case of /api/authenticate and /api/update/access-token)
+}
+    </pre>
+    <p><strong>Secret key</strong> auto created on module install. Its added it gitignore, you can however update the key manually after install</p>
+    <p>For best performance, on token revoke (logout) the long term token (refreshToken is marked as is_revoked and no more usable) but the access token which has no direct relation to the refreshToken will be valid until its expiry time reaches (60 seconds total), so it has been left upon client to discard the access_token on logout, so server has not to make any extra checks for token validation</p>
+    <p>This module is designed for seamless JWT integration with Odoo APIs, enhancing security and scalability for your applications.</p>
+</section>
+

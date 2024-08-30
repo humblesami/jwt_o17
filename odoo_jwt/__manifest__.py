@@ -15,6 +15,9 @@
     ],
     "assets": {
     },
+    'images': [
+        'static/description/main_screenshot.png',
+    ],
     'post_init_hook': '_install_jwt',
     'depends': ['base'],
     'application': True
