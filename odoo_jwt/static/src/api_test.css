@@ -1,0 +1,51 @@
+.container{padding: 10px}
+h2{
+    margin: 0;
+}
+input,button, select{padding: 2px; font-size: 15px;}
+button{ margin-top: 5px; }
+button, select, a{cursor:pointer;}
+#token{width: 1000px;}
+.feedback div{
+    font-weight: bold;
+    color: brown;
+    padding: 5px;
+}
+.param, .header{
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+input[is_empty="1"]{
+    border: 2px solid red;
+}
+#form select{
+    min-width: 210px;
+}
+#form .param_container label{
+    display: inline-block;
+    min-width: 96px;
+
+}
+.param_container{
+    border: 1px solid #ddd;
+    padding :5px;
+    padding-top: 0;
+    margin-top: 5px;
+}
+h3{
+    margin: 5px 0;
+}
+.submitter span{
+    border: 1px solid #ddd;
+    padding: 2px;
+    margin-right: 2px;
+}
+.submitter label{
+    font-weight: bold;
+}
+.submitter .title{
+    color: blue;
+}
+.submitter .value{
+    color: green;
+}

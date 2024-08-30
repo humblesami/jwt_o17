@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="ApiTestTemplate" name="Api Test Page">
+        <html>
+            <head>
+                <title>Api Test Form</title>
+                <link rel="stylesheet" href="/odoo_jwt/static/src/api_test.css" />
+            </head>
+            <body>
+                <div class="container">
+                    <h2>Test APIs Form <a href="/api/login">Back to Login</a></h2>
+                    <div class="feedback">
+                        <div id="error"/>
+                    </div>
+                    <form id="form" method="POST">
+                        <div class="submitter">
+                            <span>
+                                <label class="title">Current Time:</label>
+                                <label class="value current_time"/>
+                            </span>
+                            <span>
+                                <label class="title">Access Token:</label>
+                                <label class="value short_token_time"/>
+                            </span>
+                            <span>
+                                <label class="title">Login Time:</label>
+                                <label class="value login_time"/>
+                            </span>
+                            <button type="submit">Submit</button>
+                        </div>
+
+                        <div class="urls param_container">
+                            <h3>Api Url</h3>
+                            <label>API Url</label>
+                            <select name="url_list">
+                                <option>/api/update/access-token</option>
+                                <option>/api/update/refresh-token</option>
+                                <option>/api/protected/test</option>
+                                <option>/api/revoke/token</option>
+                            </select>
+
+                            <label>Chosen Url</label>
+                            <input name="url_selected" value="" />
+                        </div>
+
+                        <div class="parameters param_container">
+                            <h3>Input Data</h3>
+                            <div class="params_list">
+                                <div class="const_par param">
+                                    <label>Name</label>
+                                    <input name="name" value="user_id" readonly="1" />
+                                    <label>Value</label>
+                                    <input class="user_id" name="value" value="" />
+                                </div>
+                            </div>
+                            <button type="button" id="add_param_btn">Add another parameter</button>
+                        </div>
+
+                        <div class="header_container param_container">
+                            <h3>Headers</h3>
+                            <div class="headers_list">
+                                <div class="const_par param">
+                                    <label>Name</label>
+                                    <input name="name" value="Authorization" readonly="1" />
+                                    <label>Value</label>
+                                    <input class="token" name="value" value="" />
+                                </div>
+                                <div class="param">
+                                    <label>Name</label>
+                                    <input name="name" value="Accept" />
+                                    <label>Value</label>
+                                    <input name="value" value="application/json" />
+                                    <button type="button" class="remove_param_btn">Remove</button>
+                                </div>
+                                <div class="param">
+                                    <label>Name</label>
+                                    <input name="name" value="Content-Type" />
+                                    <label>Value</label>
+                                    <input name="value" value="application/json" />
+                                    <button type="button" class="remove_param_btn">Remove</button>
+                                </div>
+                            </div>
+                            <button type="button" id="add_header_btn">Add another header</button>
+                        </div>
+                        <div class="submitter">
+                            <span>
+                                <label class="title">Refresh Token:</label>
+                                <label class="value long_token_time"/>
+                            </span>
+                            <span>
+                                <label class="title">Access Span:</label>
+                                <label class="value short_term_token_span"/>
+                            </span>
+                            <span>
+                                <label class="title">Refresh Span:</label>
+                                <label class="value long_term_token_span"/>
+                            </span>
+
+                            <button type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <script src="/odoo_jwt/static/src/api_test.js" />
+            </body>
+        </html>
+    </template>
+</odoo>

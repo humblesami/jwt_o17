@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="LoginTemplate" name="Login Page">
+        <html>
+            <head>
+                <title>Api Test Form</title>
+                <link rel="stylesheet" href="/odoo_jwt/static/src/login.css" />
+            </head>
+            <body>
+                <div class="container">
+                    <h1>Login Form</h1>
+                    <div class="feedback">
+                        <div>
+                            <label>Host Url</label>
+                            <input id="host_url"/>
+                        </div>
+                        <div id="error"></div>
+                    </div>
+                    <form id="form" method="POST">
+                        <label>DB</label><input name="db" t-att-value="form['db']"/>
+                        <label>Login</label><input name="login" value=""/>
+                        <label>Password</label><input type="password" name="password" value=""/>
+                        <label></label><button type="submit" id="submit">Submit</button>
+                    </form>
+                </div>
+                <script src="/odoo_jwt/static/src/login.js"></script>
+            </body>
+        </html>
+    </template>
+</odoo>

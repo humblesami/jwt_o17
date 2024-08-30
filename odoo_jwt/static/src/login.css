@@ -1,0 +1,7 @@
+.container{padding: 10px}
+input,button{padding: 5px}
+button{cursor:pointer;}
+input{display:block; margin-bottom: 10px}
+#token{width: 1000px;}
+form{padding-top: 15px}
+.feedback div{font-weight: bold}
