@@ -4,7 +4,7 @@
     'name': 'JWT Authentication',
     'description': 'JWT Authentication with odoo controllers',
     'version': '1.0',
-    'author': 'sami@cybat',
+    'author': 'samiakram@live.com',
     'license': 'AGPL-3',
     'category': 'Authentication',
     'data': [
